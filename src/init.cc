@@ -141,7 +141,8 @@ ncclResult_t checkHsaEnvSetting() {
   CUDACHECK(hipGetDeviceProperties(&devProp, 0));
   INFO(NCCL_INIT, "Hipruntime version: %d, firmware version: %d", hipRuntimeVersion, firmwareVersion);
   if (!validHsaScratchEnvSetting(hsaScratchEnv, hipRuntimeVersion, firmwareVersion, devProp.gcnArchName)) {
-    WARN("HSA_NO_SCRATCH_RECLAIM=1 must be set to avoid RCCL perf hit, rocm ver:%d", hipRuntimeVersion);
+    // Always print out this warning message
+    printf("HSA_NO_SCRATCH_RECLAIM=1 must be set to avoid RCCL perf hit, rocm ver:%d", hipRuntimeVersion);
     return ncclSystemError;
   }
   return ncclSuccess;
